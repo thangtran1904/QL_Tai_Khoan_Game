@@ -21,48 +21,80 @@ Có các chức năng thêm, sửa, xóa ,liệt kê theo tên đăng nhập,Đ�
       AND YEAR(ngaytaoTk) = @CurrentYear;
 END;
 + Báo cáo danh sách các hoạt động của tài khoản trong tháng
-    --Truy vấn này sẽ liệt kê danh sách các hoạt động tài khoản đã được ghi lại trong tháng cụ thể.
-    SELECT user_id, Loaihoatdong, ChitietHD, Thoigian
-    FROM lichsuhoatdong
-    WHERE MONTH(Thoigian) = MONTH(GETDATE())
-      AND YEAR(Thoigian) = YEAR(GETDATE())
-    ORDER BY Thoigian DESC;
+  - Truy vấn này sẽ liệt kê danh sách các hoạt động tài khoản đã được ghi lại trong tháng cụ thể.
+    ![image](https://github.com/thangtran1904/QL_Tai_Khoan_Game/assets/168847723/7f26cd70-a853-46a6-9aeb-5e1cb135d777)
 + Báo cáo số lượng người dùng đã được tạo trong tháng hiện tại
-    --Truy vấn này sẽ đếm số lượng người dùng đã được tạo trong tháng hiện tại.
-    SELECT COUNT(*) AS TotalUsersCreated
-    FROM nguoidung
-    WHERE MONTH(ngaytaoTk) = MONTH(GETDATE())
-      AND YEAR(ngaytaoTk) = YEAR(GETDATE());
+  - Truy vấn này sẽ đếm số lượng người dùng đã được tạo trong tháng hiện tại.
+    ![image](https://github.com/thangtran1904/QL_Tai_Khoan_Game/assets/168847723/777d4f5d-501e-4d5c-90cf-8dc85d9b007a)
 + Báo cáo danh sách các người dùng được tạo trong tháng hiện tại
-    --Truy vấn này sẽ liệt kê danh sách các người dùng được tạo trong tháng hiện tại.
-      SELECT user_id, Tendangnhap, ngaytaoTk
-    FROM nguoidung
-    WHERE MONTH(ngaytaoTk) = MONTH(GETDATE())
-      AND YEAR(ngaytaoTk) = YEAR(GETDATE())
-    ORDER BY ngaytaoTk DESC;
+  - Truy vấn này sẽ liệt kê danh sách các người dùng được tạo trong tháng hiện tại.
+    ![image](https://github.com/thangtran1904/QL_Tai_Khoan_Game/assets/168847723/b37dd712-8be2-44d4-96e7-1bba48667ef4)
 + Báo cáo số lượng người dùng được tạo trong từng ngày của tháng hiện tại
-    --Truy vấn này sẽ đưa ra báo cáo số lượng người dùng được tạo trong từng ngày của tháng hiện tại.
-    SELECT DAY(ngaytaoTk) AS Ngay,
-           COUNT(*) AS SoLuongNgDung
-    FROM nguoidung
-    WHERE MONTH(ngaytaoTk) = MONTH(GETDATE())
-      AND YEAR(ngaytaoTk) = YEAR(GETDATE())
-    GROUP BY DAY(ngaytaoTk)
-    ORDER BY Ngay;
-+ Báo cáo số lượng hoạt động của từng tài khoản đã được ghi lại trong tháng cụ thể
-    --Truy vấn này sẽ đếm số lượng hoạt động tài khoản đã được ghi lại trong tháng cụ thể.
-    SELECT COUNT(*) AS TotalActivities
-    FROM lichsuhoatdong
-    WHERE MONTH(Thoigian) = MONTH(GETDATE())
-      AND YEAR(Thoigian) = YEAR(GETDATE());
-
+  - Truy vấn này sẽ đưa ra báo cáo số lượng người dùng được tạo trong từng ngày của tháng hiện tại.
+    ![image](https://github.com/thangtran1904/QL_Tai_Khoan_Game/assets/168847723/4384275b-5984-4722-98e9-aa82d9e082f6)
 * Các bảng của hệ thống
 - nguoidung(#user_id,@Tendangnhap,@Matkhau,@Email,@NgaytaoTK,@Landangnhapcuoi,@TrangthaiTK)
 ![image](https://github.com/thangtran1904/QL_Tai_Khoan_Game/assets/168847723/bb3dd31d-2e92-46ab-9590-a5e4b2b3b9db)
 ![image](https://github.com/thangtran1904/QL_Tai_Khoan_Game/assets/168847723/8e3fe189-fa97-436d-980a-af3cb652c036)
+- Bảng nguoidung:
++ Các trường:
+  - user_id (INT): Primary Key (PK). Đây là một số duy nhất cho mỗi người dùng.
+  - Tendangnhap (NVARCHAR(100)): Candidate Key. Là tên đăng nhập duy nhất.
+  - Matkhau (NVARCHAR(255)): Mật khẩu được mã hóa (ví dụ: SHA2_256).
+  - Email (NVARCHAR(100)): Địa chỉ email của người dùng.
+  - NgaytaoTk (DATE): Ngày tạo tài khoản, có thể NULL nếu không có thông tin.
+  - Landangnhapcuoi (DATETIME): Thời điểm đăng nhập cuối cùng.
+  - Capnhatluc (DATETIME): Thời điểm cập nhật thông tin người dùng.
++ Ràng buộc dữ liệu:
+  - user_id: PK không được NULL, và giá trị duy nhất.
+  - Tendangnhap: Candidate Key, không được NULL và duy nhất.
+  - Matkhau: Bắt buộc nhập.
+  - Email: Có thể NULL.
+  - NgaytaoTk, Landangnhapcuoi, Capnhatluc: Có thể NULL tùy thuộc vào nhu cầu.
++ Giải thích:
+  - user_id là PK để xác định duy nhất mỗi người dùng.
+  - Tendangnhap là Candidate Key để xác định duy nhất mỗi tên đăng nhập.
+  - Matkhau được yêu cầu bắt buộc nhập để đảm bảo tính bảo mật.
+  - Email có thể NULL vì người dùng có thể không cung cấp địa chỉ email.
+  - NgaytaoTk, Landangnhapcuoi, Capnhatluc là các trường thời gian có thể NULL nếu không có thông tin hoặc chưa cập nhật.
 - thongtinnhanvat(#profile_id,@user_id,@TenNV,@Capdo,@EXP,@Vip,@Danhhieu,@Tiendanap,@Tiendadung,@Capnhatluc)
 ![image](https://github.com/thangtran1904/QL_Tai_Khoan_Game/assets/168847723/30e04e67-d0a0-44f5-914c-f4484702d371)
 ![image](https://github.com/thangtran1904/QL_Tai_Khoan_Game/assets/168847723/786325c8-0565-4525-80d7-1107a74b46ad)
+-Bảng lichsuhoatdong
++ Các trường:
+  - log_id (INT): Primary Key (PK). Đây là một số duy nhất cho mỗi log hoạt động.
+  - user_id (INT): Foreign Key (FK) tham chiếu đến nguoidung(user_id). Xác định người dùng thực hiện hoạt động.
+  - Loaihoatdong (NVARCHAR(50)): Loại hoạt động được thực hiện.
+  - ChitietHD (NVARCHAR(250)): Chi tiết về hoạt động.
+  - Thoigian (DATETIME): Thời điểm hoạt động được thực hiện.
++ Ràng buộc dữ liệu:
+  - log_id: PK không được NULL và duy nhất.
+  - user_id: FK để liên kết với bảng nguoidung(user_id).
+  - Loaihoatdong, ChitietHD, Thoigian: Các trường này có thể NULL hoặc không tùy thuộc vào nhu cầu cụ thể của ứng dụng.
++ Giải thích:
+  - log_id là PK để xác định duy nhất mỗi log hoạt động.
+  - user_id là FK để liên kết log hoạt động với người dùng tương ứng.
+  - Loaihoatdong và ChitietHD là các trường lưu trữ văn bản, còn Thoigian là trường thời gian để lưu lại thời điểm hoạt động được thực hiện.
+- Bảng thongtinnhanvat
++ Các trường:
+  - profile_id (INT): Primary Key (PK). Đây là một số duy nhất cho mỗi thông tin nhân vật.
+  - user_id (INT): Foreign Key (FK) tham chiếu đến nguoidung(user_id). Xác định người dùng liên quan đến thông tin nhân vật.
+  - TenNV (NVARCHAR(100)): Tên của nhân vật.
+  - Capdo (INT): Cấp độ của nhân vật.
+  - EXP (FLOAT): Kinh nghiệm tích lũy của nhân vật.
+  - Vip (INT): Mức độ VIP của nhân vật.
+  - Danhhieu (NVARCHAR(50)): Danh hiệu của nhân vật.
+  - Tiendanap (NVARCHAR(50)): Số tiền đã nạp vào tài khoản của nhân vật.
+  - Tiendadung (NVARCHAR(50)): Số tiền đã sử dụng của nhân vật.
+  - Capnhatluc (DATETIME): Thời điểm cập nhật thông tin nhân vật.
++ Ràng buộc dữ liệu:
+  - profile_id: PK không được NULL và duy nhất.
+  - user_id: FK để liên kết với bảng nguoidung(user_id).
+  - TenNV, Capdo, EXP, Vip, Danhhieu, Tiendanap, Tiendadung: Các trường này có thể NULL hoặc không tùy thuộc vào nhu cầu cụ thể của ứng dụng.
++ Giải thích:
+  - profile_id là PK để xác định duy nhất mỗi thông tin nhân vật.
+  - user_id là FK để liên kết thông tin nhân vật với người dùng tương ứng.
+  - Các trường như Capdo (INT), EXP (FLOAT), Capnhatluc (DATETIME) được sử dụng cho các giá trị số học, tiền tệ và thời gian, phù hợp với nhu cầu lưu trữ và tính toán trong ứng dụng.
 - lichsuhoatdong(#log_id,@user_id,@Loaihoatdong,@ChitietHD,@Thoigian)
 ![image](https://github.com/thangtran1904/QL_Tai_Khoan_Game/assets/168847723/25dfe783-0e35-408d-af29-1be539c63d23)
 ![image](https://github.com/thangtran1904/QL_Tai_Khoan_Game/assets/168847723/b57ca008-b602-4459-86b5-8ab06e844463)

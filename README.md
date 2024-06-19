@@ -14,7 +14,8 @@ Có các chức năng thêm, sửa, xóa ,liệt kê theo tên đăng nhập,Đ�
   
 * Báo cáo
 + Báo cáo số người dùng được tạo trong tháng
-    -- Truy vấn để đếm số người dùng được tạo trong tháng
+  - Truy vấn để đếm số người dùng được tạo trong tháng
+  ```sql
     SELECT COUNT(*) AS TotalUsersCreated
     FROM nguoidung
     WHERE MONTH(ngaytaoTk) = @CurrentMonth

@@ -61,21 +61,6 @@ END;
 - thongtinnhanvat(#profile_id,@user_id,@TenNV,@Capdo,@EXP,@Vip,@Danhhieu,@Tiendanap,@Tiendadung,@Capnhatluc)
 ![image](https://github.com/thangtran1904/QL_Tai_Khoan_Game/assets/168847723/30e04e67-d0a0-44f5-914c-f4484702d371)
 ![image](https://github.com/thangtran1904/QL_Tai_Khoan_Game/assets/168847723/786325c8-0565-4525-80d7-1107a74b46ad)
--Bảng lichsuhoatdong
-+ Các trường:
-  - log_id (INT): Primary Key (PK). Đây là một số duy nhất cho mỗi log hoạt động.
-  - user_id (INT): Foreign Key (FK) tham chiếu đến nguoidung(user_id). Xác định người dùng thực hiện hoạt động.
-  - Loaihoatdong (NVARCHAR(50)): Loại hoạt động được thực hiện.
-  - ChitietHD (NVARCHAR(250)): Chi tiết về hoạt động.
-  - Thoigian (DATETIME): Thời điểm hoạt động được thực hiện.
-+ Ràng buộc dữ liệu:
-  - log_id: PK không được NULL và duy nhất.
-  - user_id: FK để liên kết với bảng nguoidung(user_id).
-  - Loaihoatdong, ChitietHD, Thoigian: Các trường này có thể NULL hoặc không tùy thuộc vào nhu cầu cụ thể của ứng dụng.
-+ Giải thích:
-  - log_id là PK để xác định duy nhất mỗi log hoạt động.
-  - user_id là FK để liên kết log hoạt động với người dùng tương ứng.
-  - Loaihoatdong và ChitietHD là các trường lưu trữ văn bản, còn Thoigian là trường thời gian để lưu lại thời điểm hoạt động được thực hiện.
 - Bảng thongtinnhanvat
 + Các trường:
   - profile_id (INT): Primary Key (PK). Đây là một số duy nhất cho mỗi thông tin nhân vật.
@@ -99,6 +84,21 @@ END;
 - lichsuhoatdong(#log_id,@user_id,@Loaihoatdong,@ChitietHD,@Thoigian)
 ![image](https://github.com/thangtran1904/QL_Tai_Khoan_Game/assets/168847723/25dfe783-0e35-408d-af29-1be539c63d23)
 ![image](https://github.com/thangtran1904/QL_Tai_Khoan_Game/assets/168847723/b57ca008-b602-4459-86b5-8ab06e844463)
+-Bảng lichsuhoatdong
++ Các trường:
+  - log_id (INT): Primary Key (PK). Đây là một số duy nhất cho mỗi log hoạt động.
+  - user_id (INT): Foreign Key (FK) tham chiếu đến nguoidung(user_id). Xác định người dùng thực hiện hoạt động.
+  - Loaihoatdong (NVARCHAR(50)): Loại hoạt động được thực hiện.
+  - ChitietHD (NVARCHAR(250)): Chi tiết về hoạt động.
+  - Thoigian (DATETIME): Thời điểm hoạt động được thực hiện.
++ Ràng buộc dữ liệu:
+  - log_id: PK không được NULL và duy nhất.
+  - user_id: FK để liên kết với bảng nguoidung(user_id).
+  - Loaihoatdong, ChitietHD, Thoigian: Các trường này có thể NULL hoặc không tùy thuộc vào nhu cầu cụ thể của ứng dụng.
++ Giải thích:
+  - log_id là PK để xác định duy nhất mỗi log hoạt động.
+  - user_id là FK để liên kết log hoạt động với người dùng tương ứng.
+  - Loaihoatdong và ChitietHD là các trường lưu trữ văn bản, còn Thoigian là trường thời gian để lưu lại thời điểm hoạt động được thực hiện.
 
 * Các SP Cho các chức năng ở trên
 - Chức năng thêm các thuộc tính theo tên đăng nhập
